@@ -1,9 +1,16 @@
 #!/usr/bin/python
 import hashlib
 import os
+import os.path
 import sqlite3
 
-urls=['/usr/bin/','/usr/local/bin/','/usr/sbin/','/usr/local/sbin/','/bin/','/sbin/']
+dirpath="/root/tmp"
+urls=[]
+for parent,dirnames,filenames in os.walk(dirpath):
+    urls.append(parent)
+    for dir_name in dirnames:
+        path_dir=os.path.join(parent,dir_name)
+        urls.append(path_dir)
 
 def file(pathdir):
     all_pro = os.listdir(pathdir)
