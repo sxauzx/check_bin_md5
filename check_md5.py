@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import os
+import os.path
 import hashlib
 import sqlite3
 import smtplib
@@ -14,7 +15,13 @@ mail_pass="kxvtommkcslrbdfg"
 sender = '1033317866@qq.com'
 receivers = ['zhangxiang@rytx.com']
 
-urls=['/usr/bin/','/usr/local/bin/']
+dirpath="/root/tmp"
+urls=[]
+for parent,dirnames,filenames in os.walk(dirpath):
+    urls.append(parent)
+    for dir_name in dirnames:
+        path_dir=os.path.join(parent,dir_name)
+        urls.append(path_dir)
 
 def file(pathdir):
     all_pro = os.listdir(pathdir)
@@ -43,8 +50,8 @@ def check(childgroup):
         if result != new:
             diff_bin.append('%s %s' % (progress, result))
         conn.commit()
-#    for item in diff_bin:
-#        print item
+    for item in diff_bin:
+        print item
 #    return diff_bin
     diff_str='\n'.join(diff_bin)
     return diff_str
